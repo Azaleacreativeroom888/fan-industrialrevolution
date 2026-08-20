@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日誌 | 煙突の街から</title>
+<meta name="description" content="産業革命について調べたこと、気づいたことを日付だけ添えて残していく日誌。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --iron-black:#221f1d;
+    --soot:#4a4641;
+    --steel:#726d66;
+    --ash:#bdb6ab;
+    --paper:#efe9df;
+    --paper-dim:#e3dccf;
+    --enji:#7c2231;
+    --enji-deep:#4c141d;
+    --enji-bright:#9c3243;
+    --ember:#c17a3e;
+    --font-display:'Shippori Mincho', serif;
+    --font-body:'Zen Kaku Gothic New', sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--iron-black);
+    font-family:var(--font-body);
+    line-height:1.9;
+  }
+  a{color:inherit;text-decoration:none;}
+  ::selection{background:var(--enji);color:var(--paper);}
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky;top:0;z-index:100;
+    background:rgba(239,233,223,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--ash);
+  }
+  .nav-inner{
+    max-width:1080px;margin:0 auto;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 24px;
+  }
+  .site-mark{
+    font-family:var(--font-display);
+    font-weight:800;font-size:1.15rem;
+    letter-spacing:.04em;
+    display:flex;align-items:center;gap:10px;
+  }
+  .site-mark .dot{
+    width:8px;height:8px;border-radius:50%;
+    background:var(--enji);
+    box-shadow:0 0 0 3px rgba(124,34,49,0.18);
+  }
+  nav.links{display:flex;gap:28px;font-size:.92rem;}
+  nav.links a{
+    position:relative;padding:4px 2px;color:var(--soot);
+    transition:color .25s ease;
+  }
+  nav.links a::after{
+    content:"";position:absolute;left:0;bottom:-3px;
+    width:0;height:2px;background:var(--enji);
+    transition:width .3s ease;
+  }
+  nav.links a:hover{color:var(--enji-deep);}
+  nav.links a:hover::after{width:100%;}
+  nav.links a.current{color:var(--enji);font-weight:700;}
+
+  /* ---------- page header ---------- */
+  .page-head{
+    position:relative;
+    background:linear-gradient(180deg,#e5e0d4 0%,#d9d3c6 60%,#cec7b8 100%);
+    color:var(--iron-black);
+    padding:64px 24px 48px;
+    overflow:hidden;
+  }
+  .page-head-bg-chimney{
+    position:absolute;
+    right:-20px;bottom:-40px;
+    width:200px;height:220px;
+    opacity:.55;
+    z-index:1;
+    pointer-events:none;
+  }
+  .page-head-inner{max-width:760px;margin:0 auto;position:relative;z-index:2;}
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:.72rem;letter-spacing:.22em;
+    color:var(--enji);
+    margin-bottom:16px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--enji);}
+  h1.title{
+    font-family:var(--font-display);
+    font-weight:800;
+    font-size:clamp(1.9rem,4vw,2.6rem);
+  }
+  .page-head p{margin-top:14px;color:var(--soot);font-size:.92rem;max-width:48ch;}
+
+  /* ---------- blog list ---------- */
+  main{max-width:760px;margin:0 auto;padding:60px 24px 100px;}
+
+  .entry{
+    position:relative;
+    padding:0 0 40px 28px;
+    border-left:1px solid var(--ash);
+  }
+  .entry:last-child{border-left:1px solid transparent;padding-bottom:0;}
+  .entry::before{
+    content:"";
+    position:absolute;left:-5px;top:6px;
+    width:9px;height:9px;border-radius:50%;
+    background:var(--enji);
+    box-shadow:0 0 0 3px var(--paper);
+  }
+  .entry-date{
+    font-family:var(--font-mono);
+    font-size:.76rem;letter-spacing:.08em;
+    color:var(--enji);
+    margin-bottom:10px;
+  }
+  .entry-body{
+    color:var(--soot);
+    font-size:.98rem;
+    white-space:pre-line;
+  }
+
+  @media (max-width:600px){
+    nav.links{gap:16px;font-size:.82rem;}
+  }
+
+  /* ---------- footer ---------- */
+  footer{
+    background:var(--iron-black);
+    color:var(--ash);
+    padding:48px 24px 32px;
+    font-size:.8rem;
+  }
+  .footer-inner{max-width:1080px;margin:0 auto;}
+  .footer-back{
+    display:inline-flex;align-items:center;gap:8px;
+    color:var(--paper);font-family:var(--font-mono);
+    font-size:.78rem;margin-bottom:24px;
+    border:1px solid var(--soot);padding:8px 14px;border-radius:3px;
+    transition:border-color .25s ease;
+  }
+  .footer-back:hover{border-color:var(--enji-bright);}
+  .footer-notice{
+    border-top:1px solid var(--soot);
+    padding-top:20px;margin-top:20px;
+    line-height:1.8;color:var(--steel);
+  }
+  .footer-notice p{margin-bottom:6px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-inner">
+    <div class="site-mark"><span class="dot"></span>煙突の街から</div>
+    <nav class="links">
+      <a href="index.html">TOP</a>
+      <a href="blog.html" class="current">日誌</a>
+      <a href="gallery.html">図版室</a>
+      <a href="about.html">About</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page-head">
+  <svg class="page-head-bg-chimney" viewBox="0 0 200 220" aria-hidden="true">
+    <g fill="#4a4641">
+      <circle cx="86" cy="34" r="26"/>
+      <circle cx="112" cy="24" r="22"/>
+      <circle cx="60" cy="24" r="18"/>
+      <circle cx="120" cy="50" r="16"/>
+      <circle cx="108" cy="60" r="13"/>
+      <circle cx="94" cy="66" r="10"/>
+      <path d="M76 84 L124 84 L118 108 L118 210 L82 210 L82 108 Z"/>
+    </g>
+  </svg>
+  <div class="page-head-inner">
+    <div class="eyebrow">FIELD LOG</div>
+    <h1 class="title">日誌</h1>
+    <p>調べたこと、気づいたことを、日付だけ添えてそのまま残していく記録帳。</p>
+  </div>
+</div>
+
+<main>
+
+  <div class="entry">
+    <div class="entry-date">2026.08.21</div>
+    <div class="entry-body">サイトを作り始めた。まずはトップページから、灰色とえんじ色、それから煙突。煙が立ちのぼるアニメーションを付けたら、それだけで一気に「らしく」なった気がする。</div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-date">2026.08.15</div>
+    <div class="entry-body">産業革命について改めて調べ直している。蒸気機関の話は知っているつもりでいたけど、ワットが改良したのはニューコメン機関だったこと、恥ずかしながら忘れていた。</div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-date">2026.08.02</div>
+    <div class="entry-body">マンチェスターの旧工場地帯の写真を眺めていた。煉瓦の煙突がずらっと並んでいる景色、怖いのに美しい。この感覚、うまく言葉にできる気がしない。</div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <a class="footer-back" href="https://azaleacreativeroom888.github.io">← Azalea Creative Room へ戻る</a>
+    <div class="footer-notice">
+      <p>© 煙突の街から / Azalea72</p>
+      <p>このサイトのテキスト・画像を無断でAIの学習データとして使用することを禁じます。</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
