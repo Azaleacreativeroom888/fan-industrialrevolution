@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>煙突の街から | 産業革命をめぐる個人サイト</title>
+<meta name="description" content="産業革命という時代をめぐる個人的な学習・鑑賞サイト。蒸気機関、工場、鉄道、そこに生きた人々について。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --iron-black:#221f1d;
+    --soot:#4a4641;
+    --steel:#726d66;
+    --ash:#bdb6ab;
+    --paper:#efe9df;
+    --paper-dim:#e3dccf;
+    --enji:#7c2231;
+    --enji-deep:#4c141d;
+    --enji-bright:#9c3243;
+    --ember:#c17a3e;
+    --font-display:'Shippori Mincho', serif;
+    --font-body:'Zen Kaku Gothic New', sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--paper);
+    color:var(--iron-black);
+    font-family:var(--font-body);
+    line-height:1.9;
+    overflow-x:hidden;
+  }
+
+  a{color:inherit;text-decoration:none;}
+
+  ::selection{background:var(--enji);color:var(--paper);}
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky;top:0;z-index:100;
+    background:rgba(239,233,223,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--ash);
+  }
+  .nav-inner{
+    max-width:1080px;margin:0 auto;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 24px;
+  }
+  .site-mark{
+    font-family:var(--font-display);
+    font-weight:800;font-size:1.15rem;
+    letter-spacing:.04em;
+    display:flex;align-items:center;gap:10px;
+  }
+  .site-mark .dot{
+    width:8px;height:8px;border-radius:50%;
+    background:var(--enji);
+    box-shadow:0 0 0 3px rgba(124,34,49,0.18);
+  }
+  nav.links{display:flex;gap:28px;font-size:.92rem;}
+  nav.links a{
+    position:relative;padding:4px 2px;color:var(--soot);
+    transition:color .25s ease;
+  }
+  nav.links a::after{
+    content:"";position:absolute;left:0;bottom:-3px;
+    width:0;height:2px;background:var(--enji);
+    transition:width .3s ease;
+  }
+  nav.links a:hover{color:var(--enji-deep);}
+  nav.links a:hover::after{width:100%;}
+  nav.links a.current{color:var(--enji);font-weight:700;}
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    background:linear-gradient(180deg,#e5e0d4 0%,#d9d3c6 60%,#cec7b8 100%);
+    color:var(--iron-black);
+    padding:88px 24px 0;
+    overflow:hidden;
+  }
+  .hero-inner{
+    max-width:1080px;margin:0 auto;
+    position:relative;z-index:2;
+    padding-bottom:40px;
+  }
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:.72rem;letter-spacing:.22em;
+    color:var(--enji);
+    margin-bottom:18px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--enji);}
+
+  h1.title{
+    font-family:var(--font-display);
+    font-weight:800;
+    font-size:clamp(2.4rem,6vw,4.1rem);
+    line-height:1.28;
+    letter-spacing:.02em;
+  }
+  h1.title .accent{color:var(--enji);}
+
+  .hero-copy{
+    margin-top:22px;
+    max-width:46ch;
+    color:var(--soot);
+    font-size:.98rem;
+  }
+
+  /* chimney watermark — sits quietly in the background, not a focal illustration */
+  .hero-bg-chimney{
+    position:absolute;
+    right:-30px;bottom:-20px;
+    width:300px;height:300px;
+    opacity:.55;
+    z-index:1;
+    pointer-events:none;
+  }
+
+  .skyline{
+    position:absolute;left:0;right:0;bottom:0;
+    height:100px;
+    background:linear-gradient(180deg, transparent 0%, rgba(74,70,65,0.28) 100%);
+    z-index:1;
+  }
+  .skyline svg{width:100%;height:100%;display:block;opacity:.5;}
+
+  /* ---------- section shared ---------- */
+  section{max-width:1080px;margin:0 auto;padding:76px 24px;}
+  .section-label{
+    font-family:var(--font-mono);
+    font-size:.72rem;letter-spacing:.2em;
+    color:var(--enji);
+    margin-bottom:14px;
+  }
+  h2{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:clamp(1.5rem,3vw,2.1rem);
+    margin-bottom:26px;
+    color:var(--iron-black);
+  }
+  .divider{
+    display:flex;align-items:center;gap:14px;
+    margin:8px 0 40px;
+    color:var(--steel);
+  }
+  .divider::before,.divider::after{
+    content:"";flex:1;height:1px;background:var(--ash);
+  }
+  .gear{
+    width:16px;height:16px;flex:none;
+    border:2px solid var(--steel);border-radius:50%;
+    position:relative;
+    animation:spin 9s linear infinite;
+  }
+  .gear::before{
+    content:"";position:absolute;inset:-5px;
+    border:2px dashed var(--steel);border-radius:50%;
+    opacity:.5;
+  }
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  /* ---------- intro ---------- */
+  .intro-grid{
+    display:grid;grid-template-columns:1.3fr .7fr;gap:48px;
+    align-items:start;
+  }
+  .intro-text p{margin-bottom:16px;color:var(--soot);}
+  .intro-text p:first-of-type::first-letter{
+    font-family:var(--font-display);
+    font-size:2.6rem;font-weight:800;color:var(--enji);
+    float:left;line-height:1;margin:4px 8px 0 0;
+  }
+  .gauge{
+    background:var(--iron-black);
+    color:var(--paper);
+    border-radius:4px;
+    padding:26px 24px;
+    font-family:var(--font-mono);
+    font-size:.82rem;
+    border:1px solid var(--soot);
+  }
+  .gauge dt{color:var(--ash);letter-spacing:.05em;margin-top:14px;}
+  .gauge dt:first-child{margin-top:0;}
+  .gauge dd{color:var(--ember);font-size:1rem;margin-top:2px;}
+
+  /* ---------- topic cards ---------- */
+  .topic-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:1px;
+    background:var(--ash);
+    border:1px solid var(--ash);
+  }
+  .topic-card{
+    background:var(--paper);
+    padding:28px 24px;
+    transition:background .25s ease, transform .25s ease;
+    position:relative;
+  }
+  .topic-card:hover{background:var(--paper-dim);}
+  .topic-num{
+    font-family:var(--font-mono);
+    font-size:.72rem;color:var(--enji);
+    letter-spacing:.1em;
+  }
+  .topic-card h3{
+    font-family:var(--font-display);
+    font-size:1.12rem;font-weight:700;
+    margin:10px 0 8px;
+  }
+  .topic-card p{font-size:.85rem;color:var(--soot);}
+
+  /* ---------- page nav cards ---------- */
+  .page-links{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:20px;
+  }
+  .page-card{
+    display:block;
+    background:var(--iron-black);
+    color:var(--paper);
+    padding:32px 26px;
+    border-radius:2px;
+    position:relative;
+    overflow:hidden;
+    transition:transform .3s ease;
+  }
+  .page-card:hover{transform:translateY(-4px);}
+  .page-card::before{
+    content:"";position:absolute;top:0;left:0;right:0;height:3px;
+    background:var(--enji);
+  }
+  .page-card .tag{
+    font-family:var(--font-mono);font-size:.68rem;
+    letter-spacing:.18em;color:var(--ember);
+  }
+  .page-card h3{
+    font-family:var(--font-display);
+    font-size:1.3rem;margin:10px 0 10px;
+  }
+  .page-card p{font-size:.84rem;color:var(--ash);}
+  .page-card .go{
+    display:inline-block;margin-top:16px;font-size:.8rem;
+    color:var(--enji-bright);
+  }
+
+  @media (max-width:760px){
+    .hero-bg-chimney{width:180px;height:180px;}
+    .intro-grid{grid-template-columns:1fr;}
+    .page-links{grid-template-columns:1fr;}
+    nav.links{gap:16px;font-size:.82rem;}
+  }
+
+  /* ---------- footer ---------- */
+  footer{
+    background:var(--iron-black);
+    color:var(--ash);
+    padding:48px 24px 32px;
+    font-size:.8rem;
+  }
+  .footer-inner{max-width:1080px;margin:0 auto;}
+  .footer-back{
+    display:inline-flex;align-items:center;gap:8px;
+    color:var(--paper);font-family:var(--font-mono);
+    font-size:.78rem;margin-bottom:24px;
+    border:1px solid var(--soot);padding:8px 14px;border-radius:3px;
+    transition:border-color .25s ease;
+  }
+  .footer-back:hover{border-color:var(--enji-bright);}
+  .footer-notice{
+    border-top:1px solid var(--soot);
+    padding-top:20px;margin-top:20px;
+    line-height:1.8;color:var(--steel);
+  }
+  .footer-notice p{margin-bottom:6px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-inner">
+    <div class="site-mark"><span class="dot"></span>煙突の街から</div>
+    <nav class="links">
+      <a href="index.html" class="current">TOP</a>
+      <a href="blog.html">日誌</a>
+      <a href="gallery.html">図版室</a>
+      <a href="about.html">About</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <svg class="hero-bg-chimney" viewBox="0 0 200 220" aria-hidden="true">
+    <g fill="#4a4641">
+      <!-- puffy smoke, overlapping circles -->
+      <circle cx="86" cy="34" r="26"/>
+      <circle cx="112" cy="24" r="22"/>
+      <circle cx="60" cy="24" r="18"/>
+      <circle cx="120" cy="50" r="16"/>
+      <circle cx="108" cy="60" r="13"/>
+      <circle cx="94" cy="66" r="10"/>
+      <!-- chimney, flared base tapering to a straight stack -->
+      <path d="M76 84 L124 84 L118 108 L118 210 L82 210 L82 108 Z"/>
+    </g>
+  </svg>
+
+  <div class="hero-inner">
+    <div class="eyebrow">1760 — 1840 / THE AGE OF STEAM</div>
+    <h1 class="title">煙が空を<br>覆った<span class="accent">時代。</span></h1>
+    <p class="hero-copy">
+      蒸気機関、紡績機、鉄道——たった一世紀足らずで世界の景色を変えてしまった産業革命。
+      その熱と騒音と煙のにおいがする時代を、機械の構造から都市に生きた人々の暮らしまで、
+      自分のペースで見つめ直していく個人サイトです。
+    </p>
+  </div>
+
+  <div class="skyline">
+    <svg viewBox="0 0 1080 120" preserveAspectRatio="none">
+      <rect x="0" y="60" width="40" height="60" fill="#16130f"/>
+      <rect x="14" y="20" width="12" height="45" fill="#16130f"/>
+      <rect x="120" y="70" width="60" height="50" fill="#16130f"/>
+      <rect x="240" y="55" width="18" height="65" fill="#16130f"/>
+      <rect x="300" y="80" width="90" height="40" fill="#16130f"/>
+      <rect x="460" y="40" width="14" height="80" fill="#16130f"/>
+      <rect x="520" y="75" width="70" height="45" fill="#16130f"/>
+      <rect x="650" y="30" width="16" height="90" fill="#16130f"/>
+      <rect x="720" y="65" width="80" height="55" fill="#16130f"/>
+      <rect x="860" y="50" width="14" height="70" fill="#16130f"/>
+      <rect x="920" y="78" width="100" height="42" fill="#16130f"/>
+      <rect x="1040" y="35" width="14" height="85" fill="#16130f"/>
+    </svg>
+  </div>
+</div>
+
+<section id="intro">
+  <div class="section-label">INTRO</div>
+  <div class="intro-grid">
+    <div class="intro-text">
+      <p>
+        産業革命は、教科書の中では「紡績機の発明」「工場制の確立」という数行の出来事として
+        片づけられがちだけど、実際にはひとつの発明が次の発明を呼び、都市の形が変わり、
+        人の働き方や時間の感覚まで変えてしまった、とても人間くさい連鎖反応だったと思う。
+      </p>
+      <p>
+        このサイトでは、蒸気機関や紡績機といった「機械」の面白さと、
+        工場や炭鉱で働いた人々の暮らしという「人」の面、その両方を同じ熱量で見ていきたい。
+        きれいごとだけじゃなく、煙害や労働環境の問題にもちゃんと目を向けながら。
+      </p>
+    </div>
+    <dl class="gauge">
+      <dt>PERIOD</dt><dd>c.1760 – 1840</dd>
+      <dt>ORIGIN</dt><dd>Great Britain</dd>
+      <dt>KEY DRIVE</dt><dd>Steam / Coal / Iron</dd>
+      <dt>FOCUS</dt><dd>Machines & People</dd>
+    </dl>
+  </div>
+</section>
+
+<section id="topics">
+  <div class="section-label">FIELD NOTES</div>
+  <h2>覗いてみたいテーマたち</h2>
+  <div class="divider"><span class="gear"></span></div>
+  <div class="topic-grid">
+    <div class="topic-card">
+      <div class="topic-num">01</div>
+      <h3>蒸気機関</h3>
+      <p>ワットの改良から工場・鉄道・船へ。動力の心臓部だった機械の仕組み。</p>
+    </div>
+    <div class="topic-card">
+      <div class="topic-num">02</div>
+      <h3>紡績機と織物工場</h3>
+      <p>ジェニー紡績機からミュール紡績機まで、綿工業が世界を変えていく過程。</p>
+    </div>
+    <div class="topic-card">
+      <div class="topic-num">03</div>
+      <h3>鉄道の時代</h3>
+      <p>距離と時間の感覚を作り変えた鉄の道。路線図を眺めるのが地味に好き。</p>
+    </div>
+    <div class="topic-card">
+      <div class="topic-num">04</div>
+      <h3>工場都市の暮らし</h3>
+      <p>マンチェスターやリーズのような「煙の都市」で、人々はどう生きたのか。</p>
+    </div>
+    <div class="topic-card">
+      <div class="topic-num">05</div>
+      <h3>発明家たちの横顔</h3>
+      <p>ワット、スティーヴンソン、アークライト。功績の裏にある試行錯誤。</p>
+    </div>
+    <div class="topic-card">
+      <div class="topic-num">06</div>
+      <h3>光と影</h3>
+      <p>児童労働、大気汚染、ラッダイト運動。進歩の裏側から目をそらさない。</p>
+    </div>
+  </div>
+</section>
+
+<section id="pages">
+  <div class="section-label">EXPLORE</div>
+  <h2>このサイトのめぐり方</h2>
+  <div class="page-links">
+    <a class="page-card" href="blog.html">
+      <div class="tag">DAILY LOG</div>
+      <h3>日誌</h3>
+      <p>調べたこと、気づいたことを日付だけ添えて残していく記録帳。</p>
+      <span class="go">読む →</span>
+    </a>
+    <a class="page-card" href="gallery.html">
+      <div class="tag">IMAGES</div>
+      <h3>図版室</h3>
+      <p>機械の図面、工場の風景、時代の空気を伝える画像を集めた部屋。</p>
+      <span class="go">見る →</span>
+    </a>
+    <a class="page-card" href="about.html">
+      <div class="tag">PROFILE</div>
+      <h3>About</h3>
+      <p>このサイトを作っている人と、このテーマを選んだ理由について。</p>
+      <span class="go">知る →</span>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <a class="footer-back" href="https://azaleacreativeroom888.github.io">← Azalea Creative Room へ戻る</a>
+    <div class="footer-notice">
+      <p>© 煙突の街から / Azalea72</p>
+      <p>このサイトのテキスト・画像を無断でAIの学習データとして使用することを禁じます。</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
