@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>人物図鑑 | 煙突の街から</title>
+<meta name="description" content="産業革命を生きた人物たちの記録。名前・解説・生きた年数（没年齢）をまとめた人物図鑑。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --iron-black:#221f1d;
+    --soot:#4a4641;
+    --steel:#726d66;
+    --ash:#bdb6ab;
+    --paper:#efe9df;
+    --paper-dim:#e3dccf;
+    --enji:#7c2231;
+    --enji-deep:#4c141d;
+    --enji-bright:#9c3243;
+    --ember:#c17a3e;
+    --font-display:'Shippori Mincho', serif;
+    --font-body:'Zen Kaku Gothic New', sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--iron-black);
+    font-family:var(--font-body);
+    line-height:1.9;
+  }
+  a{color:inherit;text-decoration:none;}
+  ::selection{background:var(--enji);color:var(--paper);}
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky;top:0;z-index:100;
+    background:rgba(239,233,223,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--ash);
+  }
+  .nav-inner{
+    max-width:1080px;margin:0 auto;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 24px;
+  }
+  .site-mark{
+    font-family:var(--font-display);
+    font-weight:800;font-size:1.15rem;
+    letter-spacing:.04em;
+    display:flex;align-items:center;gap:10px;
+  }
+  .site-mark .dot{
+    width:8px;height:8px;border-radius:50%;
+    background:var(--enji);
+    box-shadow:0 0 0 3px rgba(124,34,49,0.18);
+  }
+  nav.links{display:flex;gap:28px;font-size:.92rem;}
+  nav.links a{
+    position:relative;padding:4px 2px;color:var(--soot);
+    transition:color .25s ease;
+  }
+  nav.links a::after{
+    content:"";position:absolute;left:0;bottom:-3px;
+    width:0;height:2px;background:var(--enji);
+    transition:width .3s ease;
+  }
+  nav.links a:hover{color:var(--enji-deep);}
+  nav.links a:hover::after{width:100%;}
+  nav.links a.current{color:var(--enji);font-weight:700;}
+
+  /* ---------- breadcrumb ---------- */
+  .crumb{
+    max-width:1080px;margin:0 auto;
+    padding:16px 24px 0;
+    font-family:var(--font-mono);
+    font-size:.74rem;
+    color:var(--steel);
+  }
+  .crumb a{color:var(--soot);}
+  .crumb a:hover{color:var(--enji);}
+
+  /* ---------- page head ---------- */
+  .page-head{
+    position:relative;
+    background:linear-gradient(180deg,#e5e0d4 0%,#d9d3c6 60%,#cec7b8 100%);
+    color:var(--iron-black);
+    padding:40px 24px 48px;
+    overflow:hidden;
+  }
+  .page-head-bg-chimney{
+    position:absolute;
+    right:-20px;bottom:-40px;
+    width:200px;height:220px;
+    opacity:.55;
+    z-index:1;
+    pointer-events:none;
+  }
+  .page-head-inner{max-width:760px;margin:0 auto;position:relative;z-index:2;}
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:.72rem;letter-spacing:.22em;
+    color:var(--enji);
+    margin-bottom:16px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--enji);}
+  h1.title{
+    font-family:var(--font-display);
+    font-weight:800;
+    font-size:clamp(1.9rem,4vw,2.6rem);
+  }
+  .page-head p{margin-top:14px;color:var(--soot);font-size:.92rem;max-width:48ch;}
+
+  /* ---------- main ---------- */
+  main{max-width:820px;margin:0 auto;padding:60px 24px 100px;}
+
+  .person-card{
+    display:flex;
+    gap:22px;
+    padding:30px 0;
+    border-bottom:1px solid var(--ash);
+  }
+  .person-card:first-child{padding-top:0;}
+  .person-card:last-child{border-bottom:none;}
+
+  .person-portrait{
+    flex:none;
+    width:72px;height:72px;
+    border-radius:50%;
+    background:var(--iron-black);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .person-portrait svg{width:34px;height:34px;}
+
+  .person-body{flex:1;min-width:0;}
+  .person-top{
+    display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 14px;
+    margin-bottom:8px;
+  }
+  .person-name{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:1.2rem;
+  }
+  .person-years{
+    font-family:var(--font-mono);
+    font-size:.78rem;
+    color:var(--soot);
+  }
+  .person-age{
+    display:inline-block;
+    font-family:var(--font-mono);
+    font-size:.68rem;letter-spacing:.05em;
+    color:var(--paper);
+    background:var(--enji);
+    padding:2px 8px;
+    border-radius:2px;
+  }
+  .person-role{
+    font-family:var(--font-mono);
+    font-size:.68rem;letter-spacing:.1em;
+    color:var(--ember);
+    margin-bottom:8px;
+  }
+  .person-desc{
+    font-size:.92rem;
+    color:var(--soot);
+  }
+
+  @media (max-width:560px){
+    .person-card{gap:16px;}
+    .person-portrait{width:56px;height:56px;}
+    .person-portrait svg{width:26px;height:26px;}
+    nav.links{gap:16px;font-size:.82rem;}
+  }
+
+  /* ---------- footer ---------- */
+  footer{
+    background:var(--iron-black);
+    color:var(--ash);
+    padding:48px 24px 32px;
+    font-size:.8rem;
+  }
+  .footer-inner{max-width:1080px;margin:0 auto;}
+  .footer-back{
+    display:inline-flex;align-items:center;gap:8px;
+    color:var(--paper);font-family:var(--font-mono);
+    font-size:.78rem;margin-bottom:24px;
+    border:1px solid var(--soot);padding:8px 14px;border-radius:3px;
+    transition:border-color .25s ease;
+  }
+  .footer-back:hover{border-color:var(--enji-bright);}
+  .footer-notice{
+    border-top:1px solid var(--soot);
+    padding-top:20px;margin-top:20px;
+    line-height:1.8;color:var(--steel);
+  }
+  .footer-notice p{margin-bottom:6px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-inner">
+    <div class="site-mark"><span class="dot"></span>煙突の街から</div>
+    <nav class="links">
+      <a href="index.html">TOP</a>
+      <a href="blog.html">日誌</a>
+      <a href="gallery.html" class="current">図版室</a>
+      <a href="about.html">About</a>
+    </nav>
+  </div>
+</header>
+
+<div class="crumb">
+  <a href="gallery.html">図版室</a> / 人物図鑑
+</div>
+
+<div class="page-head">
+  <svg class="page-head-bg-chimney" viewBox="0 0 200 220" aria-hidden="true">
+    <g fill="#4a4641">
+      <circle cx="86" cy="34" r="26"/>
+      <circle cx="112" cy="24" r="22"/>
+      <circle cx="60" cy="24" r="18"/>
+      <circle cx="120" cy="50" r="16"/>
+      <circle cx="108" cy="60" r="13"/>
+      <circle cx="94" cy="66" r="10"/>
+      <path d="M76 84 L124 84 L118 108 L118 210 L82 210 L82 108 Z"/>
+    </g>
+  </svg>
+  <div class="page-head-inner">
+    <div class="eyebrow">WHO'S WHO</div>
+    <h1 class="title">人物図鑑</h1>
+    <p>産業革命という時代を動かした人々の記録。名前・簡単な解説・生きた年数（没年齢）をまとめています。</p>
+  </div>
+</div>
+
+<main>
+
+  <div class="person-card">
+    <div class="person-portrait">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#efe9df" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="8" r="4"/>
+        <path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7"/>
+      </svg>
+    </div>
+    <div class="person-body">
+      <div class="person-top">
+        <span class="person-name">ジェームズ・ワット</span>
+        <span class="person-years">1736 – 1819</span>
+        <span class="person-age">没83歳</span>
+      </div>
+      <div class="person-role">ENGINEER / 蒸気機関の改良者</div>
+      <p class="person-desc">
+        スコットランド出身の技術者。ニューコメン式蒸気機関の非効率さに気づき、
+        別室で蒸気を凝縮させる仕組みを考案して効率を大幅に向上させた。
+        この改良が工場の動力源として蒸気機関を一気に普及させるきっかけになった。
+      </p>
+    </div>
+  </div>
+
+  <div class="person-card">
+    <div class="person-portrait">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#efe9df" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="8" r="4"/>
+        <path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7"/>
+      </svg>
+    </div>
+    <div class="person-body">
+      <div class="person-top">
+        <span class="person-name">リチャード・アークライト</span>
+        <span class="person-years">1732 – 1792</span>
+        <span class="person-age">没59歳</span>
+      </div>
+      <div class="person-role">INVENTOR / 水力紡績機の開発者</div>
+      <p class="person-desc">
+        理髪師・かつら職人から身を興し、水力を動力とする紡績機を開発。
+        工場制生産の先駆けとなるクロムフォードの紡績工場を設立し、
+        「工場制度の父」と呼ばれることもある人物。
+      </p>
+    </div>
+  </div>
+
+  <div class="person-card">
+    <div class="person-portrait">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#efe9df" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="8" r="4"/>
+        <path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7"/>
+      </svg>
+    </div>
+    <div class="person-body">
+      <div class="person-top">
+        <span class="person-name">ジェームズ・ハーグリーブス</span>
+        <span class="person-years">1720頃 – 1778</span>
+        <span class="person-age">没57/58歳</span>
+      </div>
+      <div class="person-role">WEAVER / ジェニー紡績機の発明者</div>
+      <p class="person-desc">
+        織布工・大工だったとされる人物。一度に複数の糸を紡げる
+        「ジェニー紡績機」を考案し、綿織物生産の効率を大きく引き上げた。
+        正確な生年は記録が乏しく、諸説ある。
+      </p>
+    </div>
+  </div>
+
+  <div class="person-card">
+    <div class="person-portrait">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#efe9df" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="8" r="4"/>
+        <path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7"/>
+      </svg>
+    </div>
+    <div class="person-body">
+      <div class="person-top">
+        <span class="person-name">サミュエル・クロンプトン</span>
+        <span class="person-years">1753 – 1827</span>
+        <span class="person-age">没73歳</span>
+      </div>
+      <div class="person-role">INVENTOR / ミュール紡績機の発明者</div>
+      <p class="person-desc">
+        ジェニー紡績機と水力紡績機の長所を組み合わせた「ミュール紡績機」を開発。
+        細く丈夫な糸を大量に紡げるようになり、綿織物の質を大きく向上させた。
+        特許を取らなかったため、発明による利益はほとんど得られなかったという。
+      </p>
+    </div>
+  </div>
+
+  <div class="person-card">
+    <div class="person-portrait">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#efe9df" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="8" r="4"/>
+        <path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7"/>
+      </svg>
+    </div>
+    <div class="person-body">
+      <div class="person-top">
+        <span class="person-name">ジョージ・スティーヴンソン</span>
+        <span class="person-years">1781 – 1848</span>
+        <span class="person-age">没67歳</span>
+      </div>
+      <div class="person-role">ENGINEER / 「鉄道の父」</div>
+      <p class="person-desc">
+        独学で機械技術を学んだ炭鉱技師。実用的な蒸気機関車を開発し、
+        世界初の公共鉄道のひとつであるストックトン・アンド・ダーリントン鉄道の
+        建設にも携わった。
+      </p>
+    </div>
+  </div>
+
+  <div class="person-card">
+    <div class="person-portrait">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#efe9df" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="8" r="4"/>
+        <path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7"/>
+      </svg>
+    </div>
+    <div class="person-body">
+      <div class="person-top">
+        <span class="person-name">アダム・スミス</span>
+        <span class="person-years">1723 – 1790</span>
+        <span class="person-age">没66/67歳</span>
+      </div>
+      <div class="person-role">ECONOMIST / 『国富論』の著者</div>
+      <p class="person-desc">
+        スコットランドの経済学者・哲学者。分業や自由市場の仕組みを論じた
+        『国富論』（1776年）を著し、産業革命期の経済思想に大きな影響を与えた。
+      </p>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <a class="footer-back" href="https://azaleacreativeroom888.github.io">← Azalea Creative Room へ戻る</a>
+    <div class="footer-notice">
+      <p>© 煙突の街から / Azalea72</p>
+      <p>このサイトのテキスト・画像を無断でAIの学習データとして使用することを禁じます。</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
