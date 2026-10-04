@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About | 煙突の街から</title>
+<meta name="description" content="「煙突の街から」について。サイトを作っている人のこと、関連サイト、お問い合わせフォーム。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --iron-black:#221f1d;
+    --soot:#4a4641;
+    --steel:#726d66;
+    --ash:#bdb6ab;
+    --paper:#efe9df;
+    --paper-dim:#e3dccf;
+    --enji:#7c2231;
+    --enji-deep:#4c141d;
+    --enji-bright:#9c3243;
+    --ember:#c17a3e;
+    --font-display:'Shippori Mincho', serif;
+    --font-body:'Zen Kaku Gothic New', sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--iron-black);
+    font-family:var(--font-body);
+    line-height:1.9;
+  }
+  a{color:inherit;text-decoration:none;}
+  ::selection{background:var(--enji);color:var(--paper);}
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky;top:0;z-index:100;
+    background:rgba(239,233,223,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--ash);
+  }
+  .nav-inner{
+    max-width:1080px;margin:0 auto;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 24px;
+  }
+  .site-mark{
+    font-family:var(--font-display);
+    font-weight:800;font-size:1.15rem;
+    letter-spacing:.04em;
+    display:flex;align-items:center;gap:10px;
+  }
+  .site-mark .dot{
+    width:8px;height:8px;border-radius:50%;
+    background:var(--enji);
+    box-shadow:0 0 0 3px rgba(124,34,49,0.18);
+  }
+  nav.links{display:flex;gap:28px;font-size:.92rem;}
+  nav.links a{
+    position:relative;padding:4px 2px;color:var(--soot);
+    transition:color .25s ease;
+  }
+  nav.links a::after{
+    content:"";position:absolute;left:0;bottom:-3px;
+    width:0;height:2px;background:var(--enji);
+    transition:width .3s ease;
+  }
+  nav.links a:hover{color:var(--enji-deep);}
+  nav.links a:hover::after{width:100%;}
+  nav.links a.current{color:var(--enji);font-weight:700;}
+
+  /* ---------- page head ---------- */
+  .page-head{
+    position:relative;
+    background:linear-gradient(180deg,#e5e0d4 0%,#d9d3c6 60%,#cec7b8 100%);
+    color:var(--iron-black);
+    padding:64px 24px 48px;
+    overflow:hidden;
+  }
+  .page-head-bg-chimney{
+    position:absolute;
+    right:-20px;bottom:-40px;
+    width:200px;height:220px;
+    opacity:.55;
+    z-index:1;
+    pointer-events:none;
+  }
+  .page-head-inner{max-width:760px;margin:0 auto;position:relative;z-index:2;}
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:.72rem;letter-spacing:.22em;
+    color:var(--enji);
+    margin-bottom:16px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--enji);}
+  h1.title{
+    font-family:var(--font-display);
+    font-weight:800;
+    font-size:clamp(1.9rem,4vw,2.6rem);
+  }
+  .page-head p{margin-top:14px;color:var(--soot);font-size:.92rem;max-width:48ch;}
+
+  /* ---------- main / shared section ---------- */
+  main{max-width:900px;margin:0 auto;padding:64px 24px 100px;}
+
+  .section-label{
+    font-family:var(--font-mono);
+    font-size:.72rem;letter-spacing:.2em;
+    color:var(--enji);
+    margin-bottom:18px;
+    display:flex;align-items:center;gap:12px;
+  }
+  .section-label::after{
+    content:"";flex:1;height:1px;background:var(--ash);
+  }
+
+  .intro-block{margin-bottom:64px;}
+  .intro-block p{color:var(--soot);margin-bottom:14px;max-width:62ch;}
+  .intro-block p:last-child{margin-bottom:0;}
+
+  /* ---------- link grid ---------- */
+  .link-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+    gap:14px;
+    margin-bottom:48px;
+  }
+  .link-card{
+    display:flex;align-items:center;gap:16px;
+    background:var(--paper-dim);
+    border:1px solid var(--ash);
+    border-radius:2px;
+    padding:16px 18px;
+    position:relative;
+    overflow:hidden;
+    transition:transform .25s ease, border-color .25s ease;
+  }
+  .link-card::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:3px;
+    background:var(--enji);
+  }
+  .link-card:hover{transform:translateY(-2px);border-color:var(--enji-bright);}
+  .link-icon{
+    flex:none;width:42px;height:42px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.3rem;
+    background:rgba(124,34,49,0.08);
+    border:1px solid var(--ash);
+    border-radius:2px;
+  }
+  .link-text{flex:1;min-width:0;}
+  .link-name{display:block;font-weight:700;font-size:.92rem;margin-bottom:3px;}
+  .link-desc{display:block;font-size:.76rem;color:var(--steel);}
+  .link-arrow{flex:none;color:var(--steel);transition:color .25s ease, transform .25s ease;}
+  .link-card:hover .link-arrow{color:var(--enji);transform:translateX(3px);}
+
+  /* ---------- contact form ---------- */
+  .form-card{
+    background:var(--iron-black);
+    color:var(--paper);
+    border-radius:2px;
+    padding:30px 32px;
+    position:relative;
+    overflow:hidden;
+    margin-bottom:0;
+  }
+  .form-card::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:4px;
+    background:var(--enji);
+  }
+  .form-intro{font-size:.88rem;color:var(--ash);margin-bottom:24px;}
+  .form-group{margin-bottom:18px;}
+  .form-label{
+    display:block;font-family:var(--font-mono);
+    font-size:.74rem;letter-spacing:.08em;
+    color:var(--ash);margin-bottom:7px;
+  }
+  .required{color:var(--enji-bright);font-style:normal;}
+  .form-input,.form-textarea{
+    width:100%;
+    background:rgba(239,233,223,0.06);
+    border:1px solid var(--soot);
+    border-radius:2px;
+    color:var(--paper);
+    font-family:var(--font-body);
+    font-size:.92rem;
+    padding:10px 14px;
+    outline:none;
+    transition:border-color .25s ease;
+  }
+  .form-input::placeholder,.form-textarea::placeholder{color:var(--steel);}
+  .form-input:focus,.form-textarea:focus{border-color:var(--enji-bright);}
+  .form-textarea{resize:vertical;min-height:130px;}
+  .field-error{display:block;font-size:.7rem;color:#c87a7a;margin-top:5px;}
+  .form-submit{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--enji);
+    border:1px solid var(--enji-bright);
+    border-radius:2px;
+    color:var(--paper);
+    font-family:var(--font-body);
+    font-weight:700;
+    font-size:.88rem;
+    letter-spacing:.04em;
+    padding:11px 26px;
+    cursor:pointer;
+    transition:background .25s ease;
+    margin-top:6px;
+  }
+  .form-submit:hover{background:var(--enji-deep);}
+  .form-submit:disabled{opacity:.5;cursor:not-allowed;}
+  .form-success{
+    background:rgba(124,34,49,0.18);
+    border:1px solid var(--enji-bright);
+    border-radius:2px;
+    padding:14px 18px;
+    text-align:center;
+    font-size:.9rem;
+    margin-bottom:18px;
+  }
+  .form-error-global{
+    background:rgba(124,34,49,0.18);
+    border:1px solid var(--enji-bright);
+    border-radius:2px;
+    padding:10px 16px;
+    font-size:.82rem;
+    margin-bottom:16px;
+  }
+
+  @media (max-width:600px){
+    nav.links{gap:16px;font-size:.82rem;}
+    .link-grid{grid-template-columns:1fr;}
+    .form-card{padding:24px 20px;}
+  }
+
+  /* ---------- footer ---------- */
+  footer{
+    background:var(--iron-black);
+    color:var(--ash);
+    padding:48px 24px 32px;
+    font-size:.8rem;
+  }
+  .footer-inner{max-width:1080px;margin:0 auto;}
+  .footer-back{
+    display:inline-flex;align-items:center;gap:8px;
+    color:var(--paper);font-family:var(--font-mono);
+    font-size:.78rem;margin-bottom:24px;
+    border:1px solid var(--soot);padding:8px 14px;border-radius:3px;
+    transition:border-color .25s ease;
+  }
+  .footer-back:hover{border-color:var(--enji-bright);}
+  .footer-notice{
+    border-top:1px solid var(--soot);
+    padding-top:20px;margin-top:20px;
+    line-height:1.8;color:var(--steel);
+  }
+  .footer-notice p{margin-bottom:6px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-inner">
+    <div class="site-mark"><span class="dot"></span>煙突の街から</div>
+    <nav class="links">
+      <a href="index.html">TOP</a>
+      <a href="blog.html">日誌</a>
+      <a href="gallery.html">図版室</a>
+      <a href="about.html" class="current">About</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page-head">
+  <svg class="page-head-bg-chimney" viewBox="0 0 200 220" aria-hidden="true">
+    <g fill="#4a4641">
+      <circle cx="86" cy="34" r="26"/>
+      <circle cx="112" cy="24" r="22"/>
+      <circle cx="60" cy="24" r="18"/>
+      <circle cx="120" cy="50" r="16"/>
+      <circle cx="108" cy="60" r="13"/>
+      <circle cx="94" cy="66" r="10"/>
+      <path d="M76 84 L124 84 L118 108 L118 210 L82 210 L82 108 Z"/>
+    </g>
+  </svg>
+  <div class="page-head-inner">
+    <div class="eyebrow">ABOUT THIS SITE</div>
+    <h1 class="title">About</h1>
+    <p>このサイトを作っている人のこと、関連サイト、お問い合わせはこちらから。</p>
+  </div>
+</div>
+
+<main>
+
+  <div class="intro-block">
+    <div class="section-label">PROFILE</div>
+    <p>
+      「煙突の街から」は、産業革命という時代を自分のペースで調べ、描き、残していく個人サイトです。
+      普段はAzalea72として漫画やイラストを発表していて、このサイトもその創作活動のひとつです。
+    </p>
+    <p>
+      蒸気機関や紡績機といった機械の構造そのものの面白さと、工場都市で生きた人々の暮らしや
+      労働環境といった人間の側面、その両方をなるべく同じ熱量で見つめていきたいと思っています。
+    </p>
+  </div>
+
+  <div class="section-label">漫画・イラスト掲載サイト</div>
+  <div class="link-grid">
+    <a class="link-card" href="https://rookie.shonenjump.com/users/14728546961183734555" target="_blank" rel="noopener">
+      <div class="link-icon">📚</div>
+      <div class="link-text">
+        <span class="link-name">ジャンプルーキー</span>
+        <span class="link-desc">オリジナル漫画を掲載中</span>
+      </div>
+      <span class="link-arrow">›</span>
+    </a>
+    <a class="link-card" href="https://www.pixiv.net/users/105728284" target="_blank" rel="noopener">
+      <div class="link-icon">🎨</div>
+      <div class="link-text">
+        <span class="link-name">Pixiv</span>
+        <span class="link-desc">二次創作はこちらに掲載</span>
+      </div>
+      <span class="link-arrow">›</span>
+    </a>
+  </div>
+
+  <div class="section-label">SNS・その他</div>
+  <div class="link-grid">
+    <a class="link-card" href="https://bsky.app/profile/azaleaazalea88.bsky.social" target="_blank" rel="noopener">
+      <div class="link-icon">🦋</div>
+      <div class="link-text">
+        <span class="link-name">Bluesky</span>
+        <span class="link-desc">近況・作品のお知らせ</span>
+      </div>
+      <span class="link-arrow">›</span>
+    </a>
+    <a class="link-card" href="https://www.youtube.com/@LilyPopins0512" target="_blank" rel="noopener">
+      <div class="link-icon">🎬</div>
+      <div class="link-text">
+        <span class="link-name">YouTube（リリポピ）</span>
+        <span class="link-desc">動画チャンネル</span>
+      </div>
+      <span class="link-arrow">›</span>
+    </a>
+    <a class="link-card" href="https://lilipopi.github.io/lilypopins/" target="_blank" rel="noopener">
+      <div class="link-icon">🌸</div>
+      <div class="link-text">
+        <span class="link-name">リリポピのホームページ</span>
+        <span class="link-desc">別サイト</span>
+      </div>
+      <span class="link-arrow">›</span>
+    </a>
+  </div>
+
+  <div class="section-label">Azalea72のホームページ</div>
+  <div class="link-grid">
+    <a class="link-card" href="https://azaleacreativeroom888.github.io">
+      <div class="link-icon">🏠</div>
+      <div class="link-text">
+        <span class="link-name">Azalea Creative Room</span>
+        <span class="link-desc">すべてのサイトのハブ</span>
+      </div>
+      <span class="link-arrow">›</span>
+    </a>
+    <a class="link-card" href="https://azaleacreativeroom888.github.io/storyreviewazalea/" target="_blank" rel="noopener">
+      <div class="link-icon">📖</div>
+      <div class="link-text">
+        <span class="link-name">書評サイト</span>
+        <span class="link-desc">本・アニメ・映画・ゲーム・小説の備忘録</span>
+      </div>
+      <span class="link-arrow">›</span>
+    </a>
+    <a class="link-card" href="https://azaleacreativeroom888.github.io/fan-english/" target="_blank" rel="noopener">
+      <div class="link-icon">🍔</div>
+      <div class="link-text">
+        <span class="link-name">英語サイト（English Site）</span>
+        <span class="link-desc">英語話者と英語学習者に向けたサイト</span>
+      </div>
+      <span class="link-arrow">›</span>
+    </a>
+    <a class="link-card" href="https://azaleacreativeroom888.github.io/fan-watercolor/" target="_blank" rel="noopener">
+      <div class="link-icon">☁️</div>
+      <div class="link-text">
+        <span class="link-name">水彩画サイト</span>
+        <span class="link-desc">水彩画掲載</span>
+      </div>
+      <span class="link-arrow">›</span>
+    </a>
+  </div>
+
+  <div class="section-label">お問い合わせフォーム</div>
+  <div class="form-card">
+    <p class="form-intro">ご質問・ご感想などはこちらからどうぞ。<br>Gmailで受け取り、返信いたします。</p>
+
+    <div data-fs-success class="form-success" style="display:none;">
+      メッセージを送信しました。ありがとうございます！
+    </div>
+    <div data-fs-error class="form-error-global" style="display:none;"></div>
+
+    <form id="contact-form" action="https://formspree.io/f/maqvpvoz" method="POST">
+      <div class="form-group">
+        <label class="form-label" for="name">お名前</label>
+        <input class="form-input" type="text" id="name" name="name" placeholder="Azalea72" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="email">メールアドレス <span class="required">*</span></label>
+        <input class="form-input" type="email" id="email" name="email" data-fs-field placeholder="example@email.com" required>
+        <span data-fs-error="email" class="field-error"></span>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="message">メッセージ <span class="required">*</span></label>
+        <textarea class="form-textarea" id="message" name="message" data-fs-field placeholder="メッセージを入力してください…" rows="6" required></textarea>
+        <span data-fs-error="message" class="field-error"></span>
+      </div>
+      <button class="form-submit" type="submit" data-fs-submit-btn>送信する</button>
+    </form>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <a class="footer-back" href="https://azaleacreativeroom888.github.io">← Azalea Creative Room へ戻る</a>
+    <div class="footer-notice">
+      <p>© 煙突の街から / Azalea72</p>
+      <p>当サイトに掲載されている画像・文章・作品について、AI学習への利用、トレース（トレパク）、無断転載・転載、二次利用を禁止します。スクリーンショットの転載・無断引用はご遠慮ください。</p>
+      <p>Please refrain from using any images, text, or works on this website for AI training, tracing, unauthorized reproduction, redistribution, or secondary use.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
+  formspree('initForm', { formElement: '#contact-form', formId: 'maqvpvoz' });
+</script>
+<script src="https://unpkg.com/@formspree/ajax@1" defer></script>
+
+</body>
+</html>
