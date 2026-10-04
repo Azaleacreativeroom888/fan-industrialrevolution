@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>図版室 | 煙突の街から</title>
+<meta name="description" content="産業革命をテーマにしたイラストや漫画、人物図鑑をまとめた図版室。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --iron-black:#221f1d;
+    --soot:#4a4641;
+    --steel:#726d66;
+    --ash:#bdb6ab;
+    --paper:#efe9df;
+    --paper-dim:#e3dccf;
+    --enji:#7c2231;
+    --enji-deep:#4c141d;
+    --enji-bright:#9c3243;
+    --ember:#c17a3e;
+    --font-display:'Shippori Mincho', serif;
+    --font-body:'Zen Kaku Gothic New', sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--iron-black);
+    font-family:var(--font-body);
+    line-height:1.9;
+  }
+  a{color:inherit;text-decoration:none;}
+  ::selection{background:var(--enji);color:var(--paper);}
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky;top:0;z-index:100;
+    background:rgba(239,233,223,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--ash);
+  }
+  .nav-inner{
+    max-width:1080px;margin:0 auto;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 24px;
+  }
+  .site-mark{
+    font-family:var(--font-display);
+    font-weight:800;font-size:1.15rem;
+    letter-spacing:.04em;
+    display:flex;align-items:center;gap:10px;
+  }
+  .site-mark .dot{
+    width:8px;height:8px;border-radius:50%;
+    background:var(--enji);
+    box-shadow:0 0 0 3px rgba(124,34,49,0.18);
+  }
+  nav.links{display:flex;gap:28px;font-size:.92rem;}
+  nav.links a{
+    position:relative;padding:4px 2px;color:var(--soot);
+    transition:color .25s ease;
+  }
+  nav.links a::after{
+    content:"";position:absolute;left:0;bottom:-3px;
+    width:0;height:2px;background:var(--enji);
+    transition:width .3s ease;
+  }
+  nav.links a:hover{color:var(--enji-deep);}
+  nav.links a:hover::after{width:100%;}
+  nav.links a.current{color:var(--enji);font-weight:700;}
+
+  /* ---------- page head ---------- */
+  .page-head{
+    position:relative;
+    background:linear-gradient(180deg,#e5e0d4 0%,#d9d3c6 60%,#cec7b8 100%);
+    color:var(--iron-black);
+    padding:64px 24px 48px;
+    overflow:hidden;
+  }
+  .page-head-bg-chimney{
+    position:absolute;
+    right:-20px;bottom:-40px;
+    width:200px;height:220px;
+    opacity:.55;
+    z-index:1;
+    pointer-events:none;
+  }
+  .page-head-inner{max-width:760px;margin:0 auto;position:relative;z-index:2;}
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:.72rem;letter-spacing:.22em;
+    color:var(--enji);
+    margin-bottom:16px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--enji);}
+  h1.title{
+    font-family:var(--font-display);
+    font-weight:800;
+    font-size:clamp(1.9rem,4vw,2.6rem);
+  }
+  .page-head p{margin-top:14px;color:var(--soot);font-size:.92rem;max-width:48ch;}
+
+  /* ---------- shared section ---------- */
+  main{max-width:1080px;margin:0 auto;padding:64px 24px 100px;}
+  .section-label{
+    font-family:var(--font-mono);
+    font-size:.72rem;letter-spacing:.2em;
+    color:var(--enji);
+    margin-bottom:14px;
+  }
+  h2{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:clamp(1.3rem,2.6vw,1.7rem);
+    margin-bottom:22px;
+  }
+
+  /* ---------- report link box ---------- */
+  .report-box{
+    display:flex;
+    align-items:center;
+    gap:28px;
+    background:var(--iron-black);
+    color:var(--paper);
+    padding:30px 32px;
+    border-radius:2px;
+    position:relative;
+    overflow:hidden;
+    margin-bottom:90px;
+    transition:transform .3s ease;
+  }
+  .report-box:hover{transform:translateY(-3px);}
+  .report-box::before{
+    content:"";position:absolute;top:0;left:0;bottom:0;width:4px;
+    background:var(--enji);
+  }
+  .report-box-icon{
+    flex:none;
+    width:64px;height:64px;
+    border-radius:50%;
+    background:rgba(239,233,223,0.08);
+    border:1px solid var(--soot);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .report-box-icon svg{width:30px;height:30px;}
+  .report-box-text{flex:1;}
+  .report-box .tag{
+    font-family:var(--font-mono);font-size:.68rem;
+    letter-spacing:.18em;color:var(--ember);
+  }
+  .report-box h3{
+    font-family:var(--font-display);
+    font-size:1.25rem;margin:8px 0 8px;
+  }
+  .report-box p{font-size:.86rem;color:var(--ash);max-width:56ch;}
+  .report-box .go{
+    flex:none;
+    font-family:var(--font-mono);
+    font-size:.8rem;color:var(--enji-bright);
+    white-space:nowrap;
+  }
+
+  @media (max-width:600px){
+    .report-box{flex-wrap:wrap;}
+    .report-box .go{width:100%;}
+  }
+
+  /* ---------- gallery grid ---------- */
+  .gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
+    gap:22px;
+  }
+  .art-card{
+    background:var(--paper-dim);
+    border:1px solid var(--ash);
+    overflow:hidden;
+  }
+  .art-thumb{
+    aspect-ratio:4/3;
+    display:flex;align-items:center;justify-content:center;
+    position:relative;
+    color:var(--steel);
+    font-family:var(--font-mono);
+    font-size:.72rem;
+    letter-spacing:.08em;
+  }
+  .art-thumb::after{
+    content:"ここに画像";
+  }
+  .art-meta{padding:14px 16px 18px;}
+  .art-type{
+    font-family:var(--font-mono);
+    font-size:.66rem;letter-spacing:.1em;
+    color:var(--enji);
+  }
+  .art-title{
+    font-family:var(--font-display);
+    font-weight:700;font-size:1rem;
+    margin:6px 0 4px;
+  }
+  .art-date{font-family:var(--font-mono);font-size:.72rem;color:var(--steel);}
+
+  @media (max-width:600px){
+    nav.links{gap:16px;font-size:.82rem;}
+  }
+
+  /* ---------- footer ---------- */
+  footer{
+    background:var(--iron-black);
+    color:var(--ash);
+    padding:48px 24px 32px;
+    font-size:.8rem;
+  }
+  .footer-inner{max-width:1080px;margin:0 auto;}
+  .footer-back{
+    display:inline-flex;align-items:center;gap:8px;
+    color:var(--paper);font-family:var(--font-mono);
+    font-size:.78rem;margin-bottom:24px;
+    border:1px solid var(--soot);padding:8px 14px;border-radius:3px;
+    transition:border-color .25s ease;
+  }
+  .footer-back:hover{border-color:var(--enji-bright);}
+  .footer-notice{
+    border-top:1px solid var(--soot);
+    padding-top:20px;margin-top:20px;
+    line-height:1.8;color:var(--steel);
+  }
+  .footer-notice p{margin-bottom:6px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-inner">
+    <div class="site-mark"><span class="dot"></span>煙突の街から</div>
+    <nav class="links">
+      <a href="index.html">TOP</a>
+      <a href="blog.html">日誌</a>
+      <a href="gallery.html" class="current">図版室</a>
+      <a href="about.html">About</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page-head">
+  <svg class="page-head-bg-chimney" viewBox="0 0 200 220" aria-hidden="true">
+    <g fill="#4a4641">
+      <circle cx="86" cy="34" r="26"/>
+      <circle cx="112" cy="24" r="22"/>
+      <circle cx="60" cy="24" r="18"/>
+      <circle cx="120" cy="50" r="16"/>
+      <circle cx="108" cy="60" r="13"/>
+      <circle cx="94" cy="66" r="10"/>
+      <path d="M76 84 L124 84 L118 108 L118 210 L82 210 L82 108 Z"/>
+    </g>
+  </svg>
+  <div class="page-head-inner">
+    <div class="eyebrow">IMAGES & RECORDS</div>
+    <h1 class="title">図版室</h1>
+    <p>機械の図面、工場の風景、そして描いたイラストや漫画を集めた部屋。奥には人物図鑑も置いています。</p>
+  </div>
+</div>
+
+<main>
+
+  <a class="report-box" href="report1.html">
+    <div class="report-box-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#efe9df" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+        <line x1="9" y1="7" x2="15" y2="7"/>
+        <line x1="9" y1="11" x2="15" y2="11"/>
+      </svg>
+    </div>
+    <div class="report-box-text">
+      <div class="tag">RESEARCH NOTE</div>
+      <h3>人物図鑑</h3>
+      <p>産業革命を生きた人物たちの記録。名前・解説・生きた年数（没年齢）をまとめています。</p>
+    </div>
+    <span class="go">見る →</span>
+  </a>
+
+  <div class="section-label">ARTWORK</div>
+  <h2>イラスト・漫画</h2>
+
+  <div class="gallery-grid">
+    <div class="art-card">
+      <div class="art-thumb"></div>
+      <div class="art-meta">
+        <div class="art-type">ILLUST</div>
+        <div class="art-title">蒸気機関のある部屋</div>
+        <div class="art-date">2026.08</div>
+      </div>
+    </div>
+    <div class="art-card">
+      <div class="art-thumb"></div>
+      <div class="art-meta">
+        <div class="art-type">MANGA</div>
+        <div class="art-title">煙突の下で（扉絵）</div>
+        <div class="art-date">2026.08</div>
+      </div>
+    </div>
+    <div class="art-card">
+      <div class="art-thumb"></div>
+      <div class="art-meta">
+        <div class="art-type">ILLUST</div>
+        <div class="art-title">紡績工場のスケッチ</div>
+        <div class="art-date">2026.07</div>
+      </div>
+    </div>
+    <div class="art-card">
+      <div class="art-thumb"></div>
+      <div class="art-meta">
+        <div class="art-type">MANGA</div>
+        <div class="art-title">鉄道の少年（1P）</div>
+        <div class="art-date">2026.07</div>
+      </div>
+    </div>
+    <div class="art-card">
+      <div class="art-thumb"></div>
+      <div class="art-meta">
+        <div class="art-type">ILLUST</div>
+        <div class="art-title">夜の工場街</div>
+        <div class="art-date">2026.06</div>
+      </div>
+    </div>
+    <div class="art-card">
+      <div class="art-thumb"></div>
+      <div class="art-meta">
+        <div class="art-type">ILLUST</div>
+        <div class="art-title">発明家の手もと</div>
+        <div class="art-date">2026.06</div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <a class="footer-back" href="https://azaleacreativeroom888.github.io">← Azalea Creative Room へ戻る</a>
+    <div class="footer-notice">
+      <p>© 煙突の街から / Azalea72</p>
+      <p>このサイトのテキスト・画像を無断でAIの学習データとして使用することを禁じます。</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
